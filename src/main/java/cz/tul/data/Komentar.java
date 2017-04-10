@@ -28,7 +28,7 @@ public class Komentar {
     public Komentar() {
     }
 
-    public void setId(Integer id_komentar) {
+    public void setId_komentar(Integer id_komentar) {
         this.id_komentar = id_komentar;
     }
 
@@ -44,20 +44,20 @@ public class Komentar {
         this.obrazek = obrazek;
     }
 
-    public void setDatum_vytvoreni(String datum_vytvoreni) {
+    public void setKomentar_datum_vytvoreni(String datum_vytvoreni) {
         this.komentar_datum_vytvoreni = datum_vytvoreni;
     }
 
-    public void setDatum_editace(String datum_editace) {
+    public void setKomentar_datum_editace(String datum_editace) {
         this.komentar_datum_editace = datum_editace;
     }
 
-    public void setPocet_likes(Integer pocet_likes) {
+    public void setKomentar_pocet_likes(Integer pocet_likes) {
         this.komentar_pocet_likes = pocet_likes;
     }
 
 
-    public Integer getId() {
+    public Integer getId_komentar() {
         return id_komentar;
     }
 
@@ -73,15 +73,15 @@ public class Komentar {
         return obrazek;
     }
 
-    public String getDatum_vytvoreni() {
+    public String getKomentar_datum_vytvoreni() {
         return komentar_datum_vytvoreni;
     }
 
-    public String getDatum_editace() {
+    public String getKomentar_datum_editace() {
         return komentar_datum_editace;
     }
 
-    public Integer getPocet_likes() {
+    public Integer getKomentar_pocet_likes() {
         return komentar_pocet_likes;
     }
 

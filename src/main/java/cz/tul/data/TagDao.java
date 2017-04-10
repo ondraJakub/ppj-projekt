@@ -22,17 +22,17 @@ public class TagDao {
                 .query("SELECT * FROM tag, obrazek, user where tag.id_obrazek=obrazek.id_obrazek and obrazek.id_user=user.id_user",
                         (ResultSet rs, int rowNum) -> {
                             User user = new User();
-                            user.setId(rs.getInt("id_user"));
+                            user.setId_user(rs.getInt("id_user"));
                             user.setJmeno(rs.getString("jmeno"));
                             user.setDatum_registrace(rs.getString("user_datum_registrace"));
 
                             Obrazek obrazek = new Obrazek();
-                            obrazek.setId(rs.getInt("id_obrazek"));
+                            obrazek.setId_obrazek(rs.getInt("id_obrazek"));
                             obrazek.setUrl(rs.getString("url"));
                             obrazek.setNazev(rs.getString("nazev"));
-                            obrazek.setDatum_vytvoreni(rs.getString("obrazek_datum_vytvoreni"));
-                            obrazek.setDatum_editace(rs.getString("obrazek_datum_editace"));
-                            obrazek.setPocet_likes(rs.getInt("obrazek_pocet_likes"));
+                            obrazek.setObrazek_datum_vytvoreni(rs.getString("obrazek_datum_vytvoreni"));
+                            obrazek.setObrazek_datum_editace(rs.getString("obrazek_datum_editace"));
+                            obrazek.setObrazek_pocet_likes(rs.getInt("obrazek_pocet_likes"));
                             obrazek.setUser(user);
 
                             Tag tag = new Tag();
@@ -68,7 +68,7 @@ public class TagDao {
     }
 
     public boolean delete(Tag tag) {
-        MapSqlParameterSource params = new MapSqlParameterSource("id_obrazek", tag.getObrazek().getId());
+        MapSqlParameterSource params = new MapSqlParameterSource("id_obrazek", tag.getObrazek().getId_obrazek());
         params.addValue("titulek", tag.getTitulek());
 
         return jdbc.update("delete from tag where id_obrazek=:id_obrazek and titulek=:titulek", params) == 1;
@@ -77,7 +77,7 @@ public class TagDao {
     public Tag getTag(Tag tag) {
 
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("id_obrazek", tag.getObrazek().getId());
+        params.addValue("id_obrazek", tag.getObrazek().getId_obrazek());
         params.addValue("titulek", tag.getTitulek());
 
 
@@ -87,17 +87,17 @@ public class TagDao {
                     public Tag mapRow(ResultSet rs, int rowNum)
                             throws SQLException {
                         User user = new User();
-                        user.setId(rs.getInt("id_user"));
+                        user.setId_user(rs.getInt("id_user"));
                         user.setJmeno(rs.getString("jmeno"));
                         user.setDatum_registrace(rs.getString("user_datum_registrace"));
 
                         Obrazek obrazek = new Obrazek();
-                        obrazek.setId(rs.getInt("id_obrazek"));
+                        obrazek.setId_obrazek(rs.getInt("id_obrazek"));
                         obrazek.setUrl(rs.getString("url"));
                         obrazek.setNazev(rs.getString("nazev"));
-                        obrazek.setDatum_vytvoreni(rs.getString("obrazek_datum_vytvoreni"));
-                        obrazek.setDatum_editace(rs.getString("obrazek_datum_editace"));
-                        obrazek.setPocet_likes(rs.getInt("obrazek_pocet_likes"));
+                        obrazek.setObrazek_datum_vytvoreni(rs.getString("obrazek_datum_vytvoreni"));
+                        obrazek.setObrazek_datum_editace(rs.getString("obrazek_datum_editace"));
+                        obrazek.setObrazek_pocet_likes(rs.getInt("obrazek_pocet_likes"));
                         obrazek.setUser(user);
 
                         Tag tag = new Tag();

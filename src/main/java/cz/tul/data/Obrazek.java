@@ -35,7 +35,7 @@ public class Obrazek {
     public Obrazek() {
     }
 
-    public Integer getId() {
+    public Integer getId_obrazek() {
         return id_obrazek;
     }
 
@@ -51,20 +51,19 @@ public class Obrazek {
         return user;
     }
 
-    public String getDatum_vytvoreni() {
+    public String getObrazek_datum_vytvoreni() {
         return obrazek_datum_vytvoreni;
     }
 
-    public String getDatum_editace() {
+    public String getObrazek_datum_editace() {
         return obrazek_datum_editace;
     }
 
-    public Integer getPocet_likes() {
+    public Integer getObrazek_pocet_likes() {
         return obrazek_pocet_likes;
     }
 
-
-    public void setId(Integer id) {
+    public void setId_obrazek(Integer id) {
         this.id_obrazek = id;
     }
 
@@ -80,18 +79,17 @@ public class Obrazek {
         this.user = user;
     }
 
-    public void setDatum_vytvoreni(String datum_vytvoreni) {
-        this.obrazek_datum_vytvoreni = datum_vytvoreni;
+    public void setObrazek_datum_vytvoreni(String obrazek_datum_vytvoreni) {
+        this.obrazek_datum_vytvoreni = obrazek_datum_vytvoreni;
     }
 
-    public void setDatum_editace(String datum_editace) {
-        this.obrazek_datum_editace = datum_editace;
+    public void setObrazek_datum_editace(String obrazek_datum_editace) {
+        this.obrazek_datum_editace = obrazek_datum_editace;
     }
 
-    public void setPocet_likes(Integer pocet_likes) {
-        this.obrazek_pocet_likes = pocet_likes;
+    public void setObrazek_pocet_likes(Integer obrazek_pocet_likes) {
+        this.obrazek_pocet_likes = obrazek_pocet_likes;
     }
-
 
     @Override
     public String toString() {

@@ -37,7 +37,7 @@ public class UserDaoTests {
 
         assertEquals("Return user from the database", created.getJmeno(), user.getJmeno());
 
-        userDao.deleteUser(created.getId());
+        userDao.deleteUser(created.getId_user());
     }
 
 }

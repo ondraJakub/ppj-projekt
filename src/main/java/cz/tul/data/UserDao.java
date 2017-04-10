@@ -36,7 +36,7 @@ public class UserDao {
         return jdbc.queryForObject("select * from user where id_user=:id_user", params,
                 (ResultSet rs, int rowNum) -> {
                     User user = new User();
-                    user.setId(rs.getInt("id_user"));
+                    user.setId_user(rs.getInt("id_user"));
                     user.setJmeno(rs.getString("jmeno"));
                     user.setDatum_registrace(rs.getString("user_datum_registrace"));
 
@@ -51,7 +51,7 @@ public class UserDao {
         return jdbc.queryForObject("select * from user where jmeno=:jmeno", params,
                 (ResultSet rs, int rowNum) -> {
                     User user = new User();
-                    user.setId(rs.getInt("id_user"));
+                    user.setId_user(rs.getInt("id_user"));
                     user.setJmeno(rs.getString("jmeno"));
                     user.setDatum_registrace(rs.getString("user_datum_registrace"));
 
@@ -66,7 +66,7 @@ public class UserDao {
                 .query("select * from user",
                         (ResultSet rs, int rowNum) -> {
                             User user = new User();
-                            user.setId(rs.getInt("id_user"));
+                            user.setId_user(rs.getInt("id_user"));
                             user.setJmeno(rs.getString("jmeno"));
                             user.setDatum_registrace(rs.getString("user_datum_registrace"));
 

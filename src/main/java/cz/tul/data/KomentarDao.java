@@ -28,29 +28,29 @@ public class KomentarDao {
                                 "user AS user2 WHERE komentar.id_user=user2.id_user and komentar.id_obrazek=obrazek.id_obrazek",
                         (ResultSet rs, int rowNum) -> {
                             User commenter = new User();
-                            commenter.setId(rs.getInt("commenter_id"));
+                            commenter.setId_user(rs.getInt("commenter_id"));
                             commenter.setJmeno(rs.getString("commenter_jmeno"));
                             commenter.setDatum_registrace(rs.getString("commenter_datum_registrace"));
 
                             User creator = new User();
-                            creator.setId(rs.getInt("creator_id"));
+                            creator.setId_user(rs.getInt("creator_id"));
                             creator.setJmeno(rs.getString("creator_jmeno"));
                             creator.setDatum_registrace(rs.getString("creator_datum_registrace"));
 
                             Obrazek obrazek = new Obrazek();
-                            obrazek.setId(rs.getInt("id_obrazek"));
+                            obrazek.setId_obrazek(rs.getInt("id_obrazek"));
                             obrazek.setUrl(rs.getString("url"));
                             obrazek.setNazev(rs.getString("nazev"));
-                            obrazek.setDatum_vytvoreni(rs.getString("obrazek_datum_vytvoreni"));
-                            obrazek.setDatum_editace(rs.getString("obrazek_datum_editace"));
-                            obrazek.setPocet_likes(rs.getInt("obrazek_pocet_likes"));
+                            obrazek.setObrazek_datum_vytvoreni(rs.getString("obrazek_datum_vytvoreni"));
+                            obrazek.setObrazek_datum_editace(rs.getString("obrazek_datum_editace"));
+                            obrazek.setObrazek_pocet_likes(rs.getInt("obrazek_pocet_likes"));
                             obrazek.setUser(creator);
 
                             Komentar komentar = new Komentar();
-                            komentar.setId(rs.getInt("id_obrazek"));
-                            komentar.setDatum_vytvoreni(rs.getString("komentar_datum_vytvoreni"));
-                            komentar.setDatum_editace(rs.getString("komentar_datum_editace"));
-                            komentar.setPocet_likes(rs.getInt("komentar_pocet_likes"));
+                            komentar.setId_komentar(rs.getInt("id_obrazek"));
+                            komentar.setKomentar_datum_vytvoreni(rs.getString("komentar_datum_vytvoreni"));
+                            komentar.setKomentar_datum_editace(rs.getString("komentar_datum_editace"));
+                            komentar.setKomentar_pocet_likes(rs.getInt("komentar_pocet_likes"));
                             komentar.setText(rs.getString("text"));
                             komentar.setUser(commenter);
                             komentar.setObrazek(obrazek);
@@ -81,11 +81,11 @@ public class KomentarDao {
 
     public boolean changeLikes(Komentar komentar, boolean like) {
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("id_komentar", komentar.getId());
+        params.addValue("id_komentar", komentar.getId_komentar());
         if (like) {
-            params.addValue("pocet_likes", komentar.getPocet_likes() + 1);
+            params.addValue("pocet_likes", komentar.getKomentar_pocet_likes() + 1);
         } else {
-            params.addValue("pocet_dislikes", komentar.getPocet_likes() - 1);
+            params.addValue("pocet_dislikes", komentar.getKomentar_pocet_likes() - 1);
         }
         return jdbc.update("update komentar set pocet_likes=:pocet_likes where id_komentar=:id_komentar", params) == 1;
     }
@@ -127,29 +127,29 @@ public class KomentarDao {
                     public Komentar mapRow(ResultSet rs, int rowNum)
                             throws SQLException {
                         User commenter = new User();
-                        commenter.setId(rs.getInt("commenter_id"));
+                        commenter.setId_user(rs.getInt("commenter_id"));
                         commenter.setJmeno(rs.getString("commenter_jmeno"));
                         commenter.setDatum_registrace(rs.getString("commenter_datum_registrace"));
 
                         User creator = new User();
-                        creator.setId(rs.getInt("creator_id"));
+                        creator.setId_user(rs.getInt("creator_id"));
                         creator.setJmeno(rs.getString("creator_jmeno"));
                         creator.setDatum_registrace(rs.getString("creator_datum_registrace"));
 
                         Obrazek obrazek = new Obrazek();
-                        obrazek.setId(rs.getInt("id_obrazek"));
+                        obrazek.setId_obrazek(rs.getInt("id_obrazek"));
                         obrazek.setUrl(rs.getString("url"));
                         obrazek.setNazev(rs.getString("nazev"));
-                        obrazek.setDatum_vytvoreni(rs.getString("datum_vytvoreni"));
-                        obrazek.setDatum_editace(rs.getString("datum_editace"));
-                        obrazek.setPocet_likes(rs.getInt("image_likes"));
+                        obrazek.setObrazek_datum_vytvoreni(rs.getString("obrazek_datum_vytvoreni"));
+                        obrazek.setObrazek_datum_editace(rs.getString("obrazek_datum_editace"));
+                        obrazek.setObrazek_pocet_likes(rs.getInt("obrazek_pocet_likes"));
                         obrazek.setUser(creator);
 
                         Komentar komentar = new Komentar();
-                        komentar.setId(rs.getInt("id_obrazek"));
-                        komentar.setDatum_vytvoreni(rs.getString("datum_vytvoreni"));
-                        komentar.setDatum_editace(rs.getString("datum_editace"));
-                        komentar.setPocet_likes(rs.getInt("pocet_likes"));
+                        komentar.setId_komentar(rs.getInt("id_obrazek"));
+                        komentar.setKomentar_datum_vytvoreni(rs.getString("datum_vytvoreni"));
+                        komentar.setKomentar_datum_editace(rs.getString("datum_editace"));
+                        komentar.setKomentar_pocet_likes(rs.getInt("pocet_likes"));
                         komentar.setText(rs.getString("text"));
                         komentar.setUser(commenter);
                         komentar.setObrazek(obrazek);

@@ -23,7 +23,7 @@ public class User {
         this.user_datum_registrace = datum_registrace;
     }
 
-    public Integer getId() {
+    public Integer getId_user() {
         return id_user;
     }
 
@@ -35,7 +35,7 @@ public class User {
         return user_datum_registrace;
     }
 
-    public void setId(Integer id_user) {
+    public void setId_user(Integer id_user) {
         this.id_user = id_user;
     }
 

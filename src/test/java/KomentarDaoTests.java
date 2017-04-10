@@ -29,6 +29,7 @@ public class KomentarDaoTests {
     public void testVytvorKomentar() {
 
         User imageCreator = new User("imageCreator", "2008-01-01 00:00:01");
+        userDao.create(imageCreator);
         imageCreator = userDao.getUser(imageCreator.getJmeno());
 
         User commenter = new User("commenter", "2008-01-01 00:00:01");
@@ -40,9 +41,9 @@ public class KomentarDaoTests {
         obrazek = obrazekDao.getObrazek(obrazek.getUrl());
 
 
-        obrazekDao.deleteObrazek(obrazek.getId());
-        userDao.deleteUser(commenter.getId());
-        userDao.deleteUser(imageCreator.getId());
+        obrazekDao.deleteObrazek(obrazek.getId_obrazek());
+        userDao.deleteUser(commenter.getId_user());
+        userDao.deleteUser(imageCreator.getId_user());
     }
 
 

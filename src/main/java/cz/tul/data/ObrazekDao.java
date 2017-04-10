@@ -23,17 +23,17 @@ public class ObrazekDao {
                 .query("select * from obrazek, user where obrazek.id_user=user.id_user",
                         (ResultSet rs, int rowNum) -> {
                             User user = new User();
-                            user.setId(rs.getInt("id_user"));
+                            user.setId_user(rs.getInt("id_user"));
                             user.setJmeno(rs.getString("jmeno"));
                             user.setDatum_registrace(rs.getString("user_datum_registrace"));
 
                             Obrazek obrazek = new Obrazek();
-                            obrazek.setId(rs.getInt("id_obrazek"));
+                            obrazek.setId_obrazek(rs.getInt("id_obrazek"));
                             obrazek.setUrl(rs.getString("url"));
                             obrazek.setNazev(rs.getString("nazev"));
-                            obrazek.setDatum_vytvoreni(rs.getString("obrazek_datum_vytvoreni"));
-                            obrazek.setDatum_editace(rs.getString("obrazek_datum_editace"));
-                            obrazek.setPocet_likes(rs.getInt("obrazek_pocet_likes"));
+                            obrazek.setObrazek_datum_vytvoreni(rs.getString("obrazek_datum_vytvoreni"));
+                            obrazek.setObrazek_datum_editace(rs.getString("obrazek_datum_editace"));
+                            obrazek.setObrazek_pocet_likes(rs.getInt("obrazek_pocet_likes"));
                             obrazek.setUser(user);
 
                             return obrazek;
@@ -48,17 +48,17 @@ public class ObrazekDao {
                 .query("select * from obrazek join user using (id_user)",
                         (ResultSet rs, int rowNum) -> {
                             User user = new User();
-                            user.setId(rs.getInt("id_user"));
+                            user.setId_user(rs.getInt("id_user"));
                             user.setJmeno(rs.getString("jmeno"));
                             user.setDatum_registrace(rs.getString("user_datum_registrace"));
 
                             Obrazek obrazek = new Obrazek();
-                            obrazek.setId(rs.getInt("id_obrazek"));
+                            obrazek.setId_obrazek(rs.getInt("id_obrazek"));
                             obrazek.setUrl(rs.getString("url"));
                             obrazek.setNazev(rs.getString("nazev"));
-                            obrazek.setDatum_vytvoreni(rs.getString("obrazek_datum_vytvoreni"));
-                            obrazek.setDatum_editace(rs.getString("obrazek_datum_editace"));
-                            obrazek.setPocet_likes(rs.getInt("obrazek_pocet_likes"));
+                            obrazek.setObrazek_datum_vytvoreni(rs.getString("obrazek_datum_vytvoreni"));
+                            obrazek.setObrazek_datum_editace(rs.getString("obrazek_datum_editace"));
+                            obrazek.setObrazek_pocet_likes(rs.getInt("obrazek_pocet_likes"));
                             obrazek.setUser(user);
 
                             return obrazek;
@@ -74,15 +74,15 @@ public class ObrazekDao {
 
     public boolean changeLikes(Obrazek obrazek, boolean like) {
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("id_obrazek", obrazek.getId());
+        params.addValue("id_obrazek", obrazek.getId_obrazek());
         if (like) {
-            obrazek.setPocet_likes(obrazek.getPocet_likes() + 1);
-            params.addValue("obrazek_pocet_likes", obrazek.getPocet_likes() + 1);
+            obrazek.setObrazek_pocet_likes(obrazek.getObrazek_pocet_likes() + 1);
+            params.addValue("obrazek_pocet_likes", obrazek.getObrazek_pocet_likes() + 1);
         } else {
-            obrazek.setPocet_likes(obrazek.getPocet_likes() - 1);
-            params.addValue("obrazek_pocet_likes", obrazek.getPocet_likes() - 1);
+            obrazek.setObrazek_pocet_likes(obrazek.getObrazek_pocet_likes() - 1);
+            params.addValue("obrazek_pocet_likes", obrazek.getObrazek_pocet_likes() - 1);
         }
-        return jdbc.update("update obrazek setobrazek_ pocet_likes=:obrazek_pocet_likes where id_obrazek=:id_obrazek", params) == 1;
+        return jdbc.update("update obrazek set obrazek_pocet_likes=:obrazek_pocet_likes where id_obrazek=:id_obrazek", params) == 1;
     }
 
     public boolean create(Obrazek obrazek) {
@@ -123,17 +123,17 @@ public class ObrazekDao {
                     public Obrazek mapRow(ResultSet rs, int rowNum)
                             throws SQLException {
                         User user = new User();
-                        user.setId(rs.getInt("id_user"));
+                        user.setId_user(rs.getInt("id_user"));
                         user.setJmeno(rs.getString("jmeno"));
                         user.setDatum_registrace(rs.getString("user_datum_registrace"));
 
                         Obrazek obrazek = new Obrazek();
-                        obrazek.setId(rs.getInt("id_obrazek"));
+                        obrazek.setId_obrazek(rs.getInt("id_obrazek"));
                         obrazek.setUrl(rs.getString("url"));
                         obrazek.setNazev(rs.getString("nazev"));
-                        obrazek.setDatum_vytvoreni(rs.getString("obrazek_datum_vytvoreni"));
-                        obrazek.setDatum_editace(rs.getString("obrazek_datum_editace"));
-                        obrazek.setPocet_likes(rs.getInt("obrazek_pocet_likes"));
+                        obrazek.setObrazek_datum_vytvoreni(rs.getString("obrazek_datum_vytvoreni"));
+                        obrazek.setObrazek_datum_editace(rs.getString("obrazek_datum_editace"));
+                        obrazek.setObrazek_pocet_likes(rs.getInt("obrazek_pocet_likes"));
                         obrazek.setUser(user);
 
                         return obrazek;
@@ -153,17 +153,17 @@ public class ObrazekDao {
                     public Obrazek mapRow(ResultSet rs, int rowNum)
                             throws SQLException {
                         User user = new User();
-                        user.setId(rs.getInt("id_user"));
+                        user.setId_user(rs.getInt("id_user"));
                         user.setJmeno(rs.getString("jmeno"));
                         user.setDatum_registrace(rs.getString("user_datum_registrace"));
 
                         Obrazek obrazek = new Obrazek();
-                        obrazek.setId(rs.getInt("id_obrazek"));
+                        obrazek.setId_obrazek(rs.getInt("id_obrazek"));
                         obrazek.setUrl(rs.getString("url"));
                         obrazek.setNazev(rs.getString("nazev"));
-                        obrazek.setDatum_vytvoreni(rs.getString("obrazek_datum_vytvoreni"));
-                        obrazek.setDatum_editace(rs.getString("obrazek_datum_editace"));
-                        obrazek.setPocet_likes(rs.getInt("obrazek_pocet_likes"));
+                        obrazek.setObrazek_datum_vytvoreni(rs.getString("obrazek_datum_vytvoreni"));
+                        obrazek.setObrazek_datum_editace(rs.getString("obrazek_datum_editace"));
+                        obrazek.setObrazek_pocet_likes(rs.getInt("obrazek_pocet_likes"));
                         obrazek.setUser(user);
 
                         return obrazek;
