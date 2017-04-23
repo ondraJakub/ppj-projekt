@@ -1,15 +1,36 @@
 package cz.tul.data;
 
+import javax.persistence.*;
+
 /**
  * Created by Ondrej Jakub on 4/3/2017.
  */
+@Entity
+@Table(name = "obrazek")
 public class Obrazek {
+
+    @Id
+    @Column(name = "id_obrazek")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_obrazek;
+
+    @Column(name = "nazev")
     private String nazev;
+
+    @Column(name = "url")
     private String url;
+
+    @Column(name = "obrazek_datum_vytvoreni")
     private String obrazek_datum_vytvoreni;
+
+    @Column(name = "obrazek_datum_editace")
     private String obrazek_datum_editace;
+
+    @Column(name = "obrazek_pocet_likes")
     private Integer obrazek_pocet_likes;
+
+    @ManyToOne
+    @JoinColumn(name = "id_user")
     private User user;
 
 

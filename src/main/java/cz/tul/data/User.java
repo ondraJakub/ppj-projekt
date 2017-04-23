@@ -1,15 +1,30 @@
 package cz.tul.data;
 
+import javax.persistence.*;
+
 /**
  * Created by Ondrej Jakub on 4/3/2017.
  */
+@Entity
+@Table(name = "user")
 public class User {
 
+    @Id
+    @Column(name = "id_user")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_user;
+
+    @Column(name="jmeno")
     private String jmeno;
+
+    @Column(name="user_datum_registrace")
     private String user_datum_registrace;
 
     public User() {
+    }
+
+    public User(String jmeno) {
+        this.jmeno = jmeno;
     }
 
     public User(int id_user, String jmeno, String datum_registrace) {

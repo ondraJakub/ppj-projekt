@@ -27,15 +27,17 @@ public class UserDaoTests {
     @Test
     public void testVytvorUser() {
 
-        User user = new User("testUser", "2008-01-01 00:00:01");
+        userDao.deleteUsers();
 
-        assertTrue("User creation should return true", userDao.create(user));
+        User user = new User("testUser", "2016-10-20 00:00:01");
 
-        assertTrue("User should exist", userDao.exists(user.getJmeno()));
+        userDao.create(user);
+
+        assertTrue(userDao.exists(user.getJmeno()));
 
         User created = userDao.getUser(user.getJmeno());
 
-        assertEquals("Return user from the database", created.getJmeno(), user.getJmeno());
+        assertEquals(created.getJmeno(), user.getJmeno());
 
         userDao.deleteUser(created.getId_user());
     }

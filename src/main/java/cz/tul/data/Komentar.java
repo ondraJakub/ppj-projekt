@@ -1,18 +1,42 @@
 package cz.tul.data;
 
+import javax.persistence.*;
+
 /**
  * Created by Ondrej Jakub on 4/3/2017.
  */
+@Entity
+@Table(name = "komentar")
 public class Komentar {
+    @Id
+    @Column(name = "id_komentar")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_komentar;
+
+    @Column(name="text")
     private String text;
 
+    @Column(name="komentar_datum_vytvoreni")
     private String komentar_datum_vytvoreni;
+
+    @Column(name="komentar_datum_editace")
     private String komentar_datum_editace;
+
+    @Column(name="komentar_pocet_likes")
     private Integer komentar_pocet_likes;
 
+    @ManyToOne
+    @JoinColumn(name = "id_user")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "id_obrazek")
     private Obrazek obrazek;
+
+    public Komentar() {
+        this.user = new User();
+        this.obrazek = new Obrazek();
+    }
 
 
     public Komentar(int id_komentar, String text, User user, Obrazek obrazek, String datum_vytvoreni, String datum_editace, Integer pocet_likes, Integer pocet_dislikes) {
@@ -25,7 +49,13 @@ public class Komentar {
         this.komentar_pocet_likes = pocet_likes;
     }
 
-    public Komentar() {
+    public Komentar(User user, Obrazek obrazek, String datum_vytvoreni, String datum_editace, String text) {
+        this.user = user;
+        this.obrazek = obrazek;
+        this.komentar_datum_vytvoreni = datum_vytvoreni;
+        this.komentar_datum_editace = datum_editace;
+        this.komentar_pocet_likes = 0;
+        this.text = text;
     }
 
     public void setId_komentar(Integer id_komentar) {
