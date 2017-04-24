@@ -16,6 +16,7 @@ import java.util.List;
 
 @Transactional
 public class KomentarDao {
+
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -33,9 +34,9 @@ public class KomentarDao {
     }
 
 
-    public boolean deleteKomentar(int id_komentar) {
-        Query query = session().createQuery("delete from Komentar where id_komentar=:id_komentar");
-        query.setLong("id_komentar", id_komentar);
+    public boolean deleteKomentar(int id) {
+        Query query = session().createQuery("delete from Komentar where id=:id");
+        query.setLong("id", id);
         return query.executeUpdate() == 1;
     }
 
@@ -48,6 +49,8 @@ public class KomentarDao {
     }
 
     public void deleteKomentare() {
-        session().createQuery("delete from Komentar").executeUpdate();
+        if (getKomentare() != null) {
+            session().createQuery("delete from Komentar").executeUpdate();
+        }
     }
 }

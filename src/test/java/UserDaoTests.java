@@ -1,5 +1,6 @@
 import cz.tul.Main;
 import cz.tul.data.*;
+import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -22,14 +25,23 @@ import static org.junit.Assert.assertTrue;
 public class UserDaoTests {
 
     @Autowired
+    private ObrazekDao obrazekDao;
+    @Autowired
     private UserDao userDao;
+    @Autowired
+    private KomentarDao komentarDao;
+
+    @Before
+    public void init() {
+        komentarDao.deleteKomentare();
+        obrazekDao.deleteObrazky();
+        userDao.deleteUsers();
+    }
 
     @Test
     public void testVytvorUser() {
 
-        userDao.deleteUsers();
-
-        User user = new User("testUser", "2016-10-20 00:00:01");
+        User user = new User("Ondrej Jakub", LocalDateTime.now());
 
         userDao.create(user);
 
@@ -38,8 +50,6 @@ public class UserDaoTests {
         User created = userDao.getUser(user.getJmeno());
 
         assertEquals(created.getJmeno(), user.getJmeno());
-
-        userDao.deleteUser(created.getId_user());
     }
 
 }

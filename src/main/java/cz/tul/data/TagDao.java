@@ -13,11 +13,16 @@ import java.util.List;
  */
 @Transactional
 public class TagDao {
+
     @Autowired
     private SessionFactory sessionFactory;
 
     public Session session() {
         return sessionFactory.getCurrentSession();
+    }
+
+    public void create(Tag tag) {
+        session().save(tag);
     }
 
     public List<Tag> getTagy() {

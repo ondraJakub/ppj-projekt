@@ -1,5 +1,6 @@
 import cz.tul.Main;
 import cz.tul.data.*;
+import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertEquals;
 
@@ -27,35 +30,29 @@ public class KomentarDaoTests {
     @Autowired
     private KomentarDao komentarDao;
 
+    @Before
+    public void init() {
+        komentarDao.deleteKomentare();
+        userDao.deleteUsers();
+        obrazekDao.deleteObrazky();
+    }
+
     @Test
     public void testVytvorKomentar() {
-        obrazekDao.deleteObrazky();
-        userDao.deleteUsers();
-        komentarDao.deleteKomentare();
-
-
-        User autor = new User("imageCreator", "2016-10-20 00:00:01");
+        User autor = new User("Ondrej Jakub", LocalDateTime.now());
         userDao.create(autor);
         autor = userDao.getUser(autor.getJmeno());
 
-        User komentator = new User("commenter", "2016-10-20 00:00:01");
-        userDao.create(komentator);
-        komentator = userDao.getUser(komentator.getJmeno());
-
-        Obrazek obrazek = new Obrazek(autor,"http://test", "titulek", "2016-10-20 00:00:01");
+        Obrazek obrazek = new Obrazek(autor,"http://testovaci_obrazek", "titulek", LocalDateTime.now());
         obrazekDao.create(obrazek);
         obrazek = obrazekDao.getObrazek(obrazek.getUrl());
 
-        Komentar komentar = new Komentar(komentator, obrazek, "2016-10-20 00:00:01", "2016-10-20 00:00:01", "test");
+        Komentar komentar = new Komentar(autor, obrazek, LocalDateTime.now(), "test");
         komentarDao.create(komentar);
 
         Komentar novy = komentarDao.getKomentar(komentar.getText());
         assertEquals(novy.getText(), komentar.getText());
 
-        komentarDao.deleteKomentar(novy.getId_komentar());
-        obrazekDao.deleteObrazek(obrazek.getId_obrazek());
-        userDao.deleteUser(komentator.getId_user());
-        userDao.deleteUser(autor.getId_user());
     }
 
 

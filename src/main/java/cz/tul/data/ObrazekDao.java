@@ -33,12 +33,13 @@ public class ObrazekDao {
         session().saveOrUpdate(obrazek);
     }
 
-    public void changeLikes(Obrazek obrazek, boolean like) {
-        if (like) {
-            obrazek.setObrazek_pocet_likes(obrazek.getObrazek_pocet_likes() + 1);
-        } else {
-            obrazek.setObrazek_pocet_likes(obrazek.getObrazek_pocet_likes() - 1);
-        }
+    public void pridejLike(Obrazek obrazek) {
+        obrazek.setPocet_likes(obrazek.getPocet_likes() + 1);
+        update(obrazek);
+    }
+
+    public void pridejDisLike(Obrazek obrazek) {
+        obrazek.setPocet_dislikes(obrazek.getPocet_dislikes() + 1);
         update(obrazek);
     }
 
@@ -61,13 +62,15 @@ public class ObrazekDao {
         return (Obrazek) criteria.uniqueResult();
     }
 
-    public boolean deleteObrazek(int id_obrazek) {
-        Query query = session().createQuery("delete from Obrazek where id_obrazek=:id_obrazek");
-        query.setLong("id_obrazek", id_obrazek);
+    public boolean deleteObrazek(int id) {
+        Query query = session().createQuery("delete from Obrazek where id=:id");
+        query.setLong("id", id);
         return query.executeUpdate() == 1;
     }
 
     public void deleteObrazky() {
-        session().createQuery("delete from Obrazek").executeUpdate();
+        if(getObrazky()!=null){
+            session().createQuery("delete from Obrazek").executeUpdate();
+        }
     }
 }

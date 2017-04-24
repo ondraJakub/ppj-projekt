@@ -1,6 +1,7 @@
 package cz.tul.data;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 /**
  * Created by Ondrej Jakub on 4/3/2017.
@@ -10,9 +11,9 @@ import javax.persistence.*;
 public class Obrazek {
 
     @Id
-    @Column(name = "id_obrazek")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_obrazek;
+    private Integer id;
 
     @Column(name = "nazev")
     private String nazev;
@@ -20,44 +21,60 @@ public class Obrazek {
     @Column(name = "url")
     private String url;
 
-    @Column(name = "obrazek_datum_vytvoreni")
-    private String obrazek_datum_vytvoreni;
+    @Column(name = "datum_vytvoreni")
+    private LocalDateTime datum_vytvoreni;
 
-    @Column(name = "obrazek_datum_editace")
-    private String obrazek_datum_editace;
+    @Column(name = "datum_editace")
+    private LocalDateTime datum_editace;
 
-    @Column(name = "obrazek_pocet_likes")
-    private Integer obrazek_pocet_likes;
+    @Column(name = "pocet_likes")
+    private Integer pocet_likes;
+
+    @Column(name = "pocet_dislikes")
+    private Integer pocet_dislikes;
 
     @ManyToOne
     @JoinColumn(name = "id_user")
     private User user;
 
 
-    public Obrazek(int id, String nazev, String url, User user, String datum_vytvoreni, String datum_editace, Integer pocet_likes) {
-        this.id_obrazek = id;
+    public Obrazek(int id, String nazev, String url, User user, LocalDateTime datum_vytvoreni, LocalDateTime datum_editace, Integer pocet_likes, Integer pocet_dislikes) {
+        this.id = id;
         this.nazev = nazev;
         this.url = url;
         this.user = user;
-        this.obrazek_datum_vytvoreni = datum_vytvoreni;
-        this.obrazek_datum_editace = datum_editace;
-        this.obrazek_pocet_likes = pocet_likes;
+        this.datum_vytvoreni = datum_vytvoreni;
+        this.datum_editace = datum_editace;
+        this.pocet_likes = pocet_likes;
+        this.pocet_dislikes = pocet_dislikes;
     }
 
-    public Obrazek(User user, String url, String nazev, String datum_vytvoreni) {
+    public Obrazek(User user, String url, String nazev, LocalDateTime datum_vytvoreni) {
         this.user = user;
         this.url = url;
         this.nazev = nazev;
-        this.obrazek_datum_vytvoreni = datum_vytvoreni;
-        this.obrazek_datum_editace = datum_vytvoreni;
-        this.obrazek_pocet_likes = 0;
+        this.datum_vytvoreni = datum_vytvoreni;
+        this.datum_editace = datum_vytvoreni;
+        this.pocet_likes = 0;
+        this.pocet_dislikes = 0;
     }
 
     public Obrazek() {
     }
 
-    public Integer getId_obrazek() {
-        return id_obrazek;
+    public Obrazek(Obrazek obrazek) {
+        this.nazev = obrazek.nazev;
+        this.url = obrazek.url;
+        this.user = obrazek.user;
+        this.datum_vytvoreni = obrazek.datum_vytvoreni;
+        this.datum_editace = obrazek.datum_editace;
+        this.pocet_likes = obrazek.pocet_likes;
+        this.pocet_dislikes = obrazek.pocet_dislikes;
+    }
+
+
+    public Integer getId() {
+        return id;
     }
 
     public String getNazev() {
@@ -72,20 +89,20 @@ public class Obrazek {
         return user;
     }
 
-    public String getObrazek_datum_vytvoreni() {
-        return obrazek_datum_vytvoreni;
+    public LocalDateTime getDatum_vytvoreni() {
+        return datum_vytvoreni;
     }
 
-    public String getObrazek_datum_editace() {
-        return obrazek_datum_editace;
+    public LocalDateTime getDatum_editace() {
+        return datum_editace;
     }
 
-    public Integer getObrazek_pocet_likes() {
-        return obrazek_pocet_likes;
+    public Integer getPocet_likes() {
+        return pocet_likes;
     }
 
-    public void setId_obrazek(Integer id) {
-        this.id_obrazek = id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public void setNazev(String nazev) {
@@ -100,28 +117,36 @@ public class Obrazek {
         this.user = user;
     }
 
-    public void setObrazek_datum_vytvoreni(String obrazek_datum_vytvoreni) {
-        this.obrazek_datum_vytvoreni = obrazek_datum_vytvoreni;
+    public void setDatum_vytvoreni(LocalDateTime datum_vytvoreni) {
+        this.datum_vytvoreni = datum_vytvoreni;
     }
 
-    public void setObrazek_datum_editace(String obrazek_datum_editace) {
-        this.obrazek_datum_editace = obrazek_datum_editace;
+    public void setDatum_editace(LocalDateTime datum_editace) {
+        this.datum_editace = datum_editace;
     }
 
-    public void setObrazek_pocet_likes(Integer obrazek_pocet_likes) {
-        this.obrazek_pocet_likes = obrazek_pocet_likes;
+    public Integer getPocet_dislikes() {
+        return pocet_dislikes;
+    }
+
+    public void setPocet_dislikes(Integer pocet_dislikes) {
+        this.pocet_dislikes = pocet_dislikes;
+    }
+
+    public void setPocet_likes(Integer pocet_likes) {
+        this.pocet_likes = pocet_likes;
     }
 
     @Override
     public String toString() {
         return "Obrazek{" +
-                "id='" + id_obrazek + '\'' +
+                "id='" + id + '\'' +
                 ", nazev='" + nazev + '\'' +
                 ", url='" + url + '\'' +
                 ", autor=" + user +
-                ", datum_vytvoreni=" + obrazek_datum_vytvoreni +
-                ", datum_editace=" + obrazek_datum_editace +
-                ", pocet_likes=" + obrazek_pocet_likes +
+                ", datum_vytvoreni=" + datum_vytvoreni +
+                ", datum_editace=" + datum_editace +
+                ", pocet_likes=" + pocet_likes +
                 ", pocet_dislikes=" +
                 '}';
     }

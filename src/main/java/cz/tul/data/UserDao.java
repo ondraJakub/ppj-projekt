@@ -12,6 +12,7 @@ import java.util.List;
 
 @Transactional
 public class UserDao {
+
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -44,13 +45,15 @@ public class UserDao {
         return criteria.list();
     }
 
-    public boolean deleteUser(int id_user) {
-        Query query = session().createQuery("delete from User where id_user=:id_user");
-        query.setLong("id_user", id_user);
+    public boolean deleteUser(int id) {
+        Query query = session().createQuery("delete from User where id=:id");
+        query.setLong("id", id);
         return query.executeUpdate() == 1;
     }
 
     public void deleteUsers() {
-        session().createQuery("delete from User").executeUpdate();
+        if (getAllUsers() != null) {
+            session().createQuery("delete from User").executeUpdate();
+        }
     }
 }

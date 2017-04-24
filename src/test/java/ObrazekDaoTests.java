@@ -1,8 +1,6 @@
 import cz.tul.Main;
-import cz.tul.data.Obrazek;
-import cz.tul.data.ObrazekDao;
-import cz.tul.data.User;
-import cz.tul.data.UserDao;
+import cz.tul.data.*;
+import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -28,6 +28,15 @@ public class ObrazekDaoTests {
     private ObrazekDao obrazekDao;
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private KomentarDao komentarDao;
+
+    @Before
+    public void init() {
+        komentarDao.deleteKomentare();
+        obrazekDao.deleteObrazky();
+        userDao.deleteUsers();
+    }
 
     @Test
     public void testVytvorObrazek() {
@@ -35,67 +44,53 @@ public class ObrazekDaoTests {
         obrazekDao.deleteObrazky();
         userDao.deleteUsers();
 
-        User user = new User("imageCreator", "2016-10-20 00:00:01");
+        User user = new User("Ondrej Jakub", LocalDateTime.now());
         userDao.create(user);
         user = userDao.getUser(user.getJmeno());
 
-        Obrazek obrazek = new Obrazek(user,"http://test", "titulek", "2016-10-20 00:00:01");
+        Obrazek obrazek = new Obrazek(user,"http://test", "titulek", LocalDateTime.now());
         obrazekDao.create(obrazek);
 
         Obrazek created = obrazekDao.getObrazek(obrazek.getUrl());
 
         assertEquals(created.getUrl(), obrazek.getUrl());
-
-        obrazekDao.deleteObrazek(created.getId_obrazek());
-        userDao.deleteUser(user.getId_user());
     }
 
     @Test
     public void testLikeDislike() {
-        obrazekDao.deleteObrazky();
-        userDao.deleteUsers();
 
-        User autor = new User("imageCreator", "2016-10-20 00:00:01");
+        User autor = new User("Ondrej Jakub", LocalDateTime.now());
         userDao.create(autor);
         autor = userDao.getUser(autor.getJmeno());
 
-        Obrazek obrazek = new Obrazek(autor,"http://liketest", "like", "2016-10-20 00:00:01");
+        Obrazek obrazek = new Obrazek(autor,"http://liketest", "like",LocalDateTime.now());
         obrazekDao.create(obrazek);
         obrazek = obrazekDao.getObrazek(obrazek.getUrl());
 
-        assertEquals((int)obrazek.getObrazek_pocet_likes(), 0);
-        obrazekDao.changeLikes(obrazek, true);
-        assertEquals((int)obrazek.getObrazek_pocet_likes(), 1);
-        obrazekDao.changeLikes(obrazek, false);
-        assertEquals((int)obrazek.getObrazek_pocet_likes(), 0);
-
-        obrazekDao.deleteObrazek(obrazek.getId_obrazek());
-        userDao.deleteUser(autor.getId_user());
+        assertEquals((int)obrazek.getPocet_likes(), 0);
+        obrazekDao.pridejLike(obrazek);
+        assertEquals((int)obrazek.getPocet_likes(), 1);
+        obrazekDao.pridejDisLike(obrazek);
+        assertEquals((int)obrazek.getPocet_dislikes(), 1);
     }
 
     @Test
     public void testZmenObrazek() {
-        obrazekDao.deleteObrazky();
-        userDao.deleteUsers();
-
-        User autor = new User("imageCreator", "2016-10-20 00:00:01");
+        User autor = new User("Ondrej Jakub", LocalDateTime.now());
         userDao.create(autor);
         autor = userDao.getUser(autor.getJmeno());
 
-        Obrazek obrazek = new Obrazek(autor,"http://liketest", "original", "2016-10-20 00:00:01");
+        Obrazek obrazek = new Obrazek(autor,"http://liketest", "original", LocalDateTime.now());
         obrazekDao.create(obrazek);
         obrazek = obrazekDao.getObrazek(obrazek.getUrl());
 
-        Obrazek original = new Obrazek(obrazek.getId_obrazek(), obrazek.getNazev(), obrazek.getUrl(), obrazek.getUser(),
-                obrazek.getObrazek_datum_vytvoreni(), obrazek.getObrazek_datum_vytvoreni(), obrazek.getObrazek_pocet_likes());
+        Obrazek original = new Obrazek(obrazek.getId(), obrazek.getNazev(), obrazek.getUrl(), obrazek.getUser(),
+                obrazek.getDatum_vytvoreni(), obrazek.getDatum_vytvoreni(), obrazek.getPocet_likes(), obrazek.getPocet_dislikes());
         obrazek.setNazev("zmena");
         obrazekDao.update(obrazek);
-        obrazek = obrazekDao.getObrazek(obrazek.getId_obrazek());
+        obrazek = obrazekDao.getObrazek(obrazek.getId());
 
         assertNotEquals(obrazek.getNazev(), original.getNazev());
-
-        obrazekDao.deleteObrazek(obrazek.getId_obrazek());
-        userDao.deleteUser(autor.getId_user());
     }
 
 
