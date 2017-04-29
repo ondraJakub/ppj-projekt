@@ -1,5 +1,6 @@
 package cz.tul;
 import cz.tul.data.*;
+import cz.tul.services.*;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -20,24 +21,24 @@ import java.util.List;
 public class Main {
 
     @Bean
-    public UserDao autorDao() {
-        return new UserDao();
+    public UserService autorService() {
+        return new UserService();
     }
 
-    @Bean
-    public KomentarDao komentarDao() {
-        return new KomentarDao();
-    }
+//    @Bean
+//    public KomentarService komentarService() {
+//        return new KomentarService();
+//    }
 
     @Bean
-    public ObrazekDao obrazekDao() {
-        return new ObrazekDao();
+    public ObrazekService obrazekService() {
+        return new ObrazekService();
     }
 
-    @Bean
-    public TagDao tagDao() {
-        return new TagDao();
-    }
+//    @Bean
+//    public TagService tagService() {
+//        return new TagService();
+//    }
 
     @Autowired
     EntityManagerFactory entityManagerFactory;
@@ -47,32 +48,27 @@ public class Main {
         return entityManagerFactory.unwrap(SessionFactory.class);
     }
 
-    @Bean
-    public PlatformTransactionManager txManager() {
-        return new HibernateTransactionManager(entityManagerFactory.unwrap(SessionFactory.class));
-    }
-
     public static void main(String[] args) {
 
 
         SpringApplication app = new SpringApplication(Main.class);
         ApplicationContext ctx = app.run(args);
 
-        UserDao userDao = ctx.getBean(UserDao.class);
-        List<User> users = userDao.getAllUsers();
+        UserService userService = ctx.getBean(UserService.class);
+        List<User> users = userService.getAllUsers();
         System.out.println(users);
 
-        ObrazekDao obrazekDao = ctx.getBean(ObrazekDao.class);
-        List<Obrazek> images = obrazekDao.getObrazky();
+        ObrazekService obrazekService = ctx.getBean(ObrazekService.class);
+        List<Obrazek> images = obrazekService.getObrazky();
         System.out.println(images);
 
-        KomentarDao komentarDao = ctx.getBean(KomentarDao.class);
-        List<Komentar> comments = komentarDao.getKomentare();
-        System.out.println(comments);
-
-        TagDao tagDao = ctx.getBean(TagDao.class);
-        List<Tag> tags = tagDao.getTagy();
-        System.out.println(tags);
+//        KomentarService komentarService = ctx.getBean(KomentarService.class);
+//        List<Komentar> comments = komentarService.getKomentare();
+//        System.out.println(comments);
+//
+//        TagService tagService = ctx.getBean(TagService.class);
+//        List<Tag> tags = tagService.getTagy();
+//        System.out.println(tags);
 
     }
 

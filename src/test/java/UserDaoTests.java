@@ -1,5 +1,7 @@
 import cz.tul.Main;
-import cz.tul.data.*;
+import cz.tul.data.User;
+import cz.tul.services.ObrazekService;
+import cz.tul.services.UserService;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -10,11 +12,9 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Ondrej Jakub on 4/3/2017.
@@ -26,38 +26,37 @@ import static org.junit.Assert.assertTrue;
 public class UserDaoTests {
 
     @Autowired
-    private ObrazekDao obrazekDao;
+    private ObrazekService obrazekService;
     @Autowired
-    private UserDao userDao;
-    @Autowired
-    private KomentarDao komentarDao;
-    @Autowired
-    private TagDao tagDao;
+    private UserService userService;
+//    @Autowired
+//    private KomentarService komentarService;
+//    @Autowired
+//    private TagService tagService;
 
 
     @Before
     public void init() {
-        komentarDao.deleteKomentare();
-        tagDao.deleteTags();
-        obrazekDao.deleteObrazky();
-        userDao.deleteUsers();
+//        tagService.deleteTags();
+        obrazekService.deleteObrazky();
+        userService.deleteUsers();
     }
 
     @Test
     public void testVytvorUser() {
         User user = new User("testUser", new Date());
-        userDao.create(user);
-        assertEquals(1, userDao.getAllUsers().size());
+        userService.create(user);
+        assertEquals(1, userService.getAllUsers().size());
     }
 
     @Test
     public void testZmenJmenoUser(){
         User user = new User("testUser", new Date());
-        userDao.create(user);
-        user = userDao.getUser("testUser");
+        userService.create(user);
+        user = userService.getUser(user.getId());
         user.setJmeno("pepa");
-        userDao.update(user);
-        assertEquals("pepa", userDao.getUser(user.getJmeno()).getJmeno());
+        userService.update(user);
+        assertEquals("pepa", userService.getUser(user.getId()).getJmeno());
     }
 
 }

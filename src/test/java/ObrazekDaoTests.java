@@ -1,5 +1,8 @@
 import cz.tul.Main;
-import cz.tul.data.*;
+import cz.tul.data.Obrazek;
+import cz.tul.data.User;
+import cz.tul.services.ObrazekService;
+import cz.tul.services.UserService;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -13,8 +16,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Ondrej Jakub on 4/3/2017.
@@ -26,13 +27,13 @@ import static org.junit.Assert.assertTrue;
 public class ObrazekDaoTests {
 
     @Autowired
-    private ObrazekDao obrazekDao;
+    private ObrazekService obrazekService;
     @Autowired
-    private UserDao userDao;
-    @Autowired
-    private KomentarDao komentarDao;
-    @Autowired
-    private TagDao tagDao;
+    private UserService userService;
+//    @Autowired
+//    private KomentarService komentarService;
+//    @Autowired
+//    private TagService tagService;
 
 
     private User user = new User("imageCreator",  new Date());
@@ -40,51 +41,51 @@ public class ObrazekDaoTests {
 
     @Before
     public void init() {
-        komentarDao.deleteKomentare();
-        tagDao.deleteTags();
-        obrazekDao.deleteObrazky();
-        userDao.deleteUsers();
+//        komentarService.deleteKomentare();
+//        tagService.deleteTags();
+        obrazekService.deleteObrazky();
+        userService.deleteUsers();
     }
 
     @Test
     public void testVytvorObrazek() {
-        userDao.create(user);
-        user = userDao.getUser(user.getJmeno());
+        userService.create(user);
+        user = userService.getUser(user.getId());
 
         Obrazek obrazek = new Obrazek(user,"http://test", "titulek", new Date());
-        obrazekDao.create(obrazek);
+        obrazekService.create(obrazek);
 
-        assertEquals(1, obrazekDao.getObrazky().size());
+        assertEquals(1, obrazekService.getObrazky().size());
     }
 
     @Test
     public void testLikeDislike() {
-        userDao.create(user);
-        User autor = userDao.getUser(user.getJmeno());
+        userService.create(user);
+        User autor = userService.getUser(user.getId());
 
         Obrazek obrazek = new Obrazek(autor,"http://liketest", "like",  new Date());
-        obrazekDao.create(obrazek);
-        obrazek = obrazekDao.getObrazek(obrazek.getUrl());
+        obrazekService.create(obrazek);
+        obrazek = obrazekService.getObrazek(obrazek.getId());
 
         assertEquals((int)obrazek.getPocet_likes(), 0);
-        obrazekDao.pridejLike(obrazek);
+        obrazekService.pridejLike(obrazek);
         assertEquals((int)obrazek.getPocet_likes(), 1);
-        obrazekDao.pridejDisLike(obrazek);
+        obrazekService.pridejDisLike(obrazek);
         assertEquals((int)obrazek.getPocet_dislikes(), 1);
     }
 
     @Test
     public void testZmenObrazek() {
 
-        userDao.create(user);
-        User autor = userDao.getUser(user.getJmeno());
+        userService.create(user);
+        User autor = userService.getUser(user.getId());
 
         Obrazek obrazek = new Obrazek(autor,"http://liketest", "original",  new Date());
-        obrazekDao.create(obrazek);
-        obrazek = obrazekDao.getObrazek(obrazek.getUrl());
+        obrazekService.create(obrazek);
+        obrazek = obrazekService.getObrazek(obrazek.getId());
         obrazek.setNazev("testZmena");
-        obrazekDao.update(obrazek);
-        obrazek = obrazekDao.getObrazek(obrazek.getUrl());
+        obrazekService.update(obrazek);
+        obrazek = obrazekService.getObrazek(obrazek.getId());
 
         assertEquals(obrazek.getNazev(), "testZmena");
     }
