@@ -10,10 +10,11 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Ondrej Jakub on 4/3/2017.
@@ -22,7 +23,7 @@ import static org.junit.Assert.assertEquals;
 @SpringApplicationConfiguration(classes = {Main.class})
 @ActiveProfiles({"test"})
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class KomentarDaoTests {
+public class TagDaoTests {
 
     @Autowired
     private ObrazekDao obrazekDao;
@@ -33,7 +34,7 @@ public class KomentarDaoTests {
     @Autowired
     private TagDao tagDao;
 
-    private User user = new User("imageCreator", new Date());
+    private User user = new User("imageCreator",  new Date());
 
     @Before
     public void init() {
@@ -44,18 +45,17 @@ public class KomentarDaoTests {
     }
 
     @Test
-    public void testVytvorKomentar() {
+    public void testVytvorTag() {
         userDao.create(user);
         user = userDao.getUser(user.getJmeno());
 
-        Obrazek obrazek = new Obrazek(user, "http://testovaci_obrazek", "titulek", new Date());
+        Obrazek obrazek = new Obrazek(user,"http://test", "titulek", new Date());
         obrazekDao.create(obrazek);
         obrazek = obrazekDao.getObrazek(obrazek.getUrl());
 
-        Komentar komentar = new Komentar(user, obrazek, new Date(), "test");
-        komentarDao.create(komentar);
-
-        List<Komentar> kometare = komentarDao.getKomentare();
-        assertEquals(1, kometare.size());
+        Tag tag = new Tag("titulek", obrazek);
+        assertTrue(tagDao.create(tag));
+        tagDao.delete(tag);
     }
+
 }

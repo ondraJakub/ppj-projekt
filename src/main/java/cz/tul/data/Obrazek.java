@@ -1,5 +1,7 @@
 package cz.tul.data;
 
+import java.util.Date;
+
 /**
  * Created by Ondrej Jakub on 4/3/2017.
  */
@@ -7,29 +9,32 @@ public class Obrazek {
     private Integer id_obrazek;
     private String nazev;
     private String url;
-    private String obrazek_datum_vytvoreni;
-    private String obrazek_datum_editace;
-    private Integer obrazek_pocet_likes;
+    private Date datum_vytvoreni;
+    private Date datum_editace;
+    private Integer pocet_likes;
+    private Integer pocet_dislikes;
     private User user;
 
 
-    public Obrazek(int id, String nazev, String url, User user, String datum_vytvoreni, String datum_editace, Integer pocet_likes) {
-        this.id_obrazek = id;
+    public Obrazek(int id_obrazek, String nazev, String url, User user, Date datum_vytvoreni, Date datum_editace, Integer pocet_likes, Integer pocet_dislikes) {
+        this.id_obrazek = id_obrazek;
         this.nazev = nazev;
         this.url = url;
         this.user = user;
-        this.obrazek_datum_vytvoreni = datum_vytvoreni;
-        this.obrazek_datum_editace = datum_editace;
-        this.obrazek_pocet_likes = pocet_likes;
+        this.datum_vytvoreni = datum_vytvoreni;
+        this.datum_editace = datum_editace;
+        this.pocet_likes = pocet_likes;
+        this.pocet_dislikes = pocet_dislikes;
     }
 
-    public Obrazek(User user, String url, String nazev, String datum_vytvoreni) {
+    public Obrazek(User user, String url, String nazev, Date datum_vytvoreni) {
         this.user = user;
         this.url = url;
         this.nazev = nazev;
-        this.obrazek_datum_vytvoreni = datum_vytvoreni;
-        this.obrazek_datum_editace = datum_vytvoreni;
-        this.obrazek_pocet_likes = 0;
+        this.datum_vytvoreni = datum_vytvoreni;
+        this.datum_editace = datum_vytvoreni;
+        this.pocet_likes = 0;
+        this.pocet_dislikes = 0;
     }
 
     public Obrazek() {
@@ -51,20 +56,20 @@ public class Obrazek {
         return user;
     }
 
-    public String getObrazek_datum_vytvoreni() {
-        return obrazek_datum_vytvoreni;
+    public Date getDatum_vytvoreni() {
+        return datum_vytvoreni;
     }
 
-    public String getObrazek_datum_editace() {
-        return obrazek_datum_editace;
+    public Date getDatum_editace() {
+        return datum_editace;
     }
 
-    public Integer getObrazek_pocet_likes() {
-        return obrazek_pocet_likes;
+    public Integer getPocet_likes() {
+        return pocet_likes;
     }
 
-    public void setId_obrazek(Integer id) {
-        this.id_obrazek = id;
+    public void setId_obrazek(Integer id_obrazek) {
+        this.id_obrazek = id_obrazek;
     }
 
     public void setNazev(String nazev) {
@@ -79,28 +84,36 @@ public class Obrazek {
         this.user = user;
     }
 
-    public void setObrazek_datum_vytvoreni(String obrazek_datum_vytvoreni) {
-        this.obrazek_datum_vytvoreni = obrazek_datum_vytvoreni;
+    public void setDatum_vytvoreni(Date datum_vytvoreni) {
+        this.datum_vytvoreni = datum_vytvoreni;
     }
 
-    public void setObrazek_datum_editace(String obrazek_datum_editace) {
-        this.obrazek_datum_editace = obrazek_datum_editace;
+    public void setDatum_editace(Date datum_editace) {
+        this.datum_editace = datum_editace;
     }
 
-    public void setObrazek_pocet_likes(Integer obrazek_pocet_likes) {
-        this.obrazek_pocet_likes = obrazek_pocet_likes;
+    public void setPocet_likes(Integer pocet_likes) {
+        this.pocet_likes = pocet_likes;
+    }
+
+    public Integer getPocet_dislikes() {
+        return pocet_dislikes;
+    }
+
+    public void setPocet_dislikes(Integer pocet_dislikes) {
+        this.pocet_dislikes = pocet_dislikes;
     }
 
     @Override
     public String toString() {
         return "Obrazek{" +
-                "id='" + id_obrazek + '\'' +
+                "id_obrazek='" + id_obrazek + '\'' +
                 ", nazev='" + nazev + '\'' +
                 ", url='" + url + '\'' +
                 ", autor=" + user +
-                ", datum_vytvoreni=" + obrazek_datum_vytvoreni +
-                ", datum_editace=" + obrazek_datum_editace +
-                ", pocet_likes=" + obrazek_pocet_likes +
+                ", datum_vytvoreni=" + datum_vytvoreni +
+                ", datum_editace=" + datum_editace +
+                ", pocet_likes=" + pocet_likes +
                 ", pocet_dislikes=" +
                 '}';
     }

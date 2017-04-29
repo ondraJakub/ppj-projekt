@@ -1,5 +1,6 @@
 import cz.tul.Main;
 import cz.tul.data.*;
+import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -22,22 +26,38 @@ import static org.junit.Assert.assertTrue;
 public class UserDaoTests {
 
     @Autowired
+    private ObrazekDao obrazekDao;
+    @Autowired
     private UserDao userDao;
+    @Autowired
+    private KomentarDao komentarDao;
+    @Autowired
+    private TagDao tagDao;
+
+
+    @Before
+    public void init() {
+        komentarDao.deleteKomentare();
+        tagDao.deleteTags();
+        obrazekDao.deleteObrazky();
+        userDao.deleteUsers();
+    }
 
     @Test
     public void testVytvorUser() {
+        User user = new User("testUser", new Date());
+        assertTrue(userDao.create(user));
+        assertEquals(1, userDao.getAllUsers().size());
+    }
 
-        User user = new User("testUser", "2008-01-01 00:00:01");
-
-        assertTrue("User creation should return true", userDao.create(user));
-
-        assertTrue("User should exist", userDao.exists(user.getJmeno()));
-
-        User created = userDao.getUser(user.getJmeno());
-
-        assertEquals("Return user from the database", created.getJmeno(), user.getJmeno());
-
-        userDao.deleteUser(created.getId_user());
+    @Test
+    public void testZmenJmenoUser(){
+        User user = new User("testUser", new Date());
+        assertTrue(userDao.create(user));
+        user = userDao.getUser("testUser");
+        user.setJmeno("pepa");
+        userDao.update(user);
+        assertEquals("pepa", userDao.getUser(user.getJmeno()).getJmeno());
     }
 
 }
