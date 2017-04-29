@@ -1,7 +1,7 @@
 package cz.tul.data;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Created by Ondrej Jakub on 4/3/2017.
@@ -19,10 +19,10 @@ public class Komentar {
     private String text;
 
     @Column(name="datum_vytvoreni")
-    private LocalDateTime datum_vytvoreni;
+    private Date datum_vytvoreni;
 
     @Column(name="datum_editace")
-    private LocalDateTime datum_editace;
+    private Date datum_editace;
 
     @Column(name="pocet_likes")
     private Integer pocet_likes;
@@ -43,7 +43,7 @@ public class Komentar {
         this.obrazek = new Obrazek();
     }
 
-    public Komentar(User user, Obrazek obrazek, LocalDateTime datum_vytvoreni, String text) {
+    public Komentar(User user, Obrazek obrazek, Date datum_vytvoreni, String text) {
         this.user = user;
         this.obrazek = obrazek;
         this.datum_vytvoreni = datum_vytvoreni;
@@ -69,11 +69,11 @@ public class Komentar {
         this.obrazek = obrazek;
     }
 
-    public void setDatum_vytvoreni(LocalDateTime datum_vytvoreni) {
+    public void setDatum_vytvoreni(Date datum_vytvoreni) {
         this.datum_vytvoreni = datum_vytvoreni;
     }
 
-    public void setDatum_editace(LocalDateTime datum_editace) {
+    public void setDatum_editace(Date datum_editace) {
         this.datum_editace = datum_editace;
     }
 
@@ -98,11 +98,11 @@ public class Komentar {
         return obrazek;
     }
 
-    public LocalDateTime getDatum_vytvoreni() {
+    public Date getDatum_vytvoreni() {
         return datum_vytvoreni;
     }
 
-    public LocalDateTime getDatum_editace() {
+    public Date getDatum_editace() {
         return datum_editace;
     }
 

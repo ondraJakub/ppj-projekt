@@ -10,7 +10,8 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -29,31 +30,32 @@ public class KomentarDaoTests {
     private UserDao userDao;
     @Autowired
     private KomentarDao komentarDao;
+    @Autowired
+    private TagDao tagDao;
+
+    private User user = new User("imageCreator", new Date());
 
     @Before
     public void init() {
         komentarDao.deleteKomentare();
-        userDao.deleteUsers();
+        tagDao.deleteTags();
         obrazekDao.deleteObrazky();
+        userDao.deleteUsers();
     }
 
     @Test
     public void testVytvorKomentar() {
-        User autor = new User("Ondrej Jakub", LocalDateTime.now());
-        userDao.create(autor);
-        autor = userDao.getUser(autor.getJmeno());
+        userDao.create(user);
+        user = userDao.getUser(user.getJmeno());
 
-        Obrazek obrazek = new Obrazek(autor,"http://testovaci_obrazek", "titulek", LocalDateTime.now());
+        Obrazek obrazek = new Obrazek(user, "http://testovaci_obrazek", "titulek", new Date());
         obrazekDao.create(obrazek);
         obrazek = obrazekDao.getObrazek(obrazek.getUrl());
 
-        Komentar komentar = new Komentar(autor, obrazek, LocalDateTime.now(), "test");
+        Komentar komentar = new Komentar(user, obrazek, new Date(), "test");
         komentarDao.create(komentar);
 
-        Komentar novy = komentarDao.getKomentar(komentar.getText());
-        assertEquals(novy.getText(), komentar.getText());
-
+        List<Komentar> kometare = komentarDao.getKomentare();
+        assertEquals(1, kometare.size());
     }
-
-
 }

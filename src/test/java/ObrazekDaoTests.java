@@ -10,10 +10,11 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Ondrej Jakub on 4/3/2017.
@@ -30,40 +31,38 @@ public class ObrazekDaoTests {
     private UserDao userDao;
     @Autowired
     private KomentarDao komentarDao;
+    @Autowired
+    private TagDao tagDao;
+
+
+    private User user = new User("imageCreator",  new Date());
+
 
     @Before
     public void init() {
         komentarDao.deleteKomentare();
+        tagDao.deleteTags();
         obrazekDao.deleteObrazky();
         userDao.deleteUsers();
     }
 
     @Test
     public void testVytvorObrazek() {
-
-        obrazekDao.deleteObrazky();
-        userDao.deleteUsers();
-
-        User user = new User("Ondrej Jakub", LocalDateTime.now());
         userDao.create(user);
         user = userDao.getUser(user.getJmeno());
 
-        Obrazek obrazek = new Obrazek(user,"http://test", "titulek", LocalDateTime.now());
+        Obrazek obrazek = new Obrazek(user,"http://test", "titulek", new Date());
         obrazekDao.create(obrazek);
 
-        Obrazek created = obrazekDao.getObrazek(obrazek.getUrl());
-
-        assertEquals(created.getUrl(), obrazek.getUrl());
+        assertEquals(1, obrazekDao.getObrazky().size());
     }
 
     @Test
     public void testLikeDislike() {
+        userDao.create(user);
+        User autor = userDao.getUser(user.getJmeno());
 
-        User autor = new User("Ondrej Jakub", LocalDateTime.now());
-        userDao.create(autor);
-        autor = userDao.getUser(autor.getJmeno());
-
-        Obrazek obrazek = new Obrazek(autor,"http://liketest", "like",LocalDateTime.now());
+        Obrazek obrazek = new Obrazek(autor,"http://liketest", "like",  new Date());
         obrazekDao.create(obrazek);
         obrazek = obrazekDao.getObrazek(obrazek.getUrl());
 
@@ -76,21 +75,18 @@ public class ObrazekDaoTests {
 
     @Test
     public void testZmenObrazek() {
-        User autor = new User("Ondrej Jakub", LocalDateTime.now());
-        userDao.create(autor);
-        autor = userDao.getUser(autor.getJmeno());
 
-        Obrazek obrazek = new Obrazek(autor,"http://liketest", "original", LocalDateTime.now());
+        userDao.create(user);
+        User autor = userDao.getUser(user.getJmeno());
+
+        Obrazek obrazek = new Obrazek(autor,"http://liketest", "original",  new Date());
         obrazekDao.create(obrazek);
         obrazek = obrazekDao.getObrazek(obrazek.getUrl());
-
-        Obrazek original = new Obrazek(obrazek.getId(), obrazek.getNazev(), obrazek.getUrl(), obrazek.getUser(),
-                obrazek.getDatum_vytvoreni(), obrazek.getDatum_vytvoreni(), obrazek.getPocet_likes(), obrazek.getPocet_dislikes());
-        obrazek.setNazev("zmena");
+        obrazek.setNazev("testZmena");
         obrazekDao.update(obrazek);
-        obrazek = obrazekDao.getObrazek(obrazek.getId());
+        obrazek = obrazekDao.getObrazek(obrazek.getUrl());
 
-        assertNotEquals(obrazek.getNazev(), original.getNazev());
+        assertEquals(obrazek.getNazev(), "testZmena");
     }
 
 

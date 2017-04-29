@@ -25,12 +25,16 @@ public class TagDao {
         session().save(tag);
     }
 
+    public void update(Tag tag) {
+        session().saveOrUpdate(tag);
+    }
+
     public List<Tag> getTagy() {
         Criteria criteria = session().createCriteria(Tag.class);
         return criteria.list();
     }
 
-    public void deleteTagy() {
+    public void deleteTags() {
         session().createQuery("delete from Tag").executeUpdate();
     }
 

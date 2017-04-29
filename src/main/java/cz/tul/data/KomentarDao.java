@@ -32,7 +32,9 @@ public class KomentarDao {
     public void create(Komentar komentar) {
         session().save(komentar);
     }
-
+    public void update(Komentar komentar) {
+        session().saveOrUpdate(komentar);
+    }
 
     public boolean deleteKomentar(int id) {
         Query query = session().createQuery("delete from Komentar where id=:id");

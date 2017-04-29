@@ -24,11 +24,8 @@ public class UserDao {
         session().save(user);
     }
 
-    public boolean exists(String jmeno) {
-        Criteria criteria = session().createCriteria(User.class);
-        criteria.add(Restrictions.eq("jmeno", jmeno));
-        User user = (User) criteria.uniqueResult();
-        return user != null;
+    public void update(User user) {
+        session().saveOrUpdate(user);
     }
 
     public User getUser(String jmeno) {

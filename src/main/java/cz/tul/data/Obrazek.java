@@ -1,7 +1,7 @@
 package cz.tul.data;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Created by Ondrej Jakub on 4/3/2017.
@@ -22,10 +22,10 @@ public class Obrazek {
     private String url;
 
     @Column(name = "datum_vytvoreni")
-    private LocalDateTime datum_vytvoreni;
+    private Date datum_vytvoreni;
 
     @Column(name = "datum_editace")
-    private LocalDateTime datum_editace;
+    private Date datum_editace;
 
     @Column(name = "pocet_likes")
     private Integer pocet_likes;
@@ -38,7 +38,7 @@ public class Obrazek {
     private User user;
 
 
-    public Obrazek(int id, String nazev, String url, User user, LocalDateTime datum_vytvoreni, LocalDateTime datum_editace, Integer pocet_likes, Integer pocet_dislikes) {
+    public Obrazek(int id, String nazev, String url, User user, Date datum_vytvoreni, Date datum_editace, Integer pocet_likes, Integer pocet_dislikes) {
         this.id = id;
         this.nazev = nazev;
         this.url = url;
@@ -49,7 +49,7 @@ public class Obrazek {
         this.pocet_dislikes = pocet_dislikes;
     }
 
-    public Obrazek(User user, String url, String nazev, LocalDateTime datum_vytvoreni) {
+    public Obrazek(User user, String url, String nazev, Date datum_vytvoreni) {
         this.user = user;
         this.url = url;
         this.nazev = nazev;
@@ -89,11 +89,11 @@ public class Obrazek {
         return user;
     }
 
-    public LocalDateTime getDatum_vytvoreni() {
+    public Date getDatum_vytvoreni() {
         return datum_vytvoreni;
     }
 
-    public LocalDateTime getDatum_editace() {
+    public Date getDatum_editace() {
         return datum_editace;
     }
 
@@ -117,11 +117,11 @@ public class Obrazek {
         this.user = user;
     }
 
-    public void setDatum_vytvoreni(LocalDateTime datum_vytvoreni) {
+    public void setDatum_vytvoreni(Date datum_vytvoreni) {
         this.datum_vytvoreni = datum_vytvoreni;
     }
 
-    public void setDatum_editace(LocalDateTime datum_editace) {
+    public void setDatum_editace(Date datum_editace) {
         this.datum_editace = datum_editace;
     }
 

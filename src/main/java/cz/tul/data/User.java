@@ -1,7 +1,8 @@
 package cz.tul.data;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
+
 
 /**
  * Created by Ondrej Jakub on 4/3/2017.
@@ -19,7 +20,7 @@ public class User {
     private String jmeno;
 
     @Column(name="datum_registrace")
-    private LocalDateTime datum_registrace;
+    private Date datum_registrace;
 
     public User() {
     }
@@ -28,13 +29,13 @@ public class User {
         this.jmeno = jmeno;
     }
 
-    public User(int id, String jmeno, LocalDateTime datum_registrace) {
+    public User(int id, String jmeno, Date datum_registrace) {
         this.id = id;
         this.jmeno = jmeno;
         this.datum_registrace = datum_registrace;
     }
 
-    public User(String jmeno, LocalDateTime datum_registrace) {
+    public User(String jmeno, Date datum_registrace) {
         this.jmeno = jmeno;
         this.datum_registrace = datum_registrace;
     }
@@ -47,7 +48,7 @@ public class User {
         return jmeno;
     }
 
-    public LocalDateTime getDatum_registrace() {
+    public Date getDatum_registrace() {
         return datum_registrace;
     }
 
@@ -59,7 +60,7 @@ public class User {
         this.jmeno = jmeno;
     }
 
-    public void setDatum_registrace(LocalDateTime datum_registrace) {
+    public void setDatum_registrace(Date datum_registrace) {
         this.datum_registrace = datum_registrace;
     }
 

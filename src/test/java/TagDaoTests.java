@@ -23,7 +23,7 @@ import static org.junit.Assert.assertTrue;
 @SpringApplicationConfiguration(classes = {Main.class})
 @ActiveProfiles({"test"})
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class UserDaoTests {
+public class TagDaoTests {
 
     @Autowired
     private ObrazekDao obrazekDao;
@@ -34,6 +34,7 @@ public class UserDaoTests {
     @Autowired
     private TagDao tagDao;
 
+    private User user = new User("imageCreator", new Date());
 
     @Before
     public void init() {
@@ -44,20 +45,17 @@ public class UserDaoTests {
     }
 
     @Test
-    public void testVytvorUser() {
-        User user = new User("testUser", new Date());
+    public void testVytvorTag() {
         userDao.create(user);
-        assertEquals(1, userDao.getAllUsers().size());
-    }
+        user = userDao.getUser(user.getJmeno());
 
-    @Test
-    public void testZmenJmenoUser(){
-        User user = new User("testUser", new Date());
-        userDao.create(user);
-        user = userDao.getUser("testUser");
-        user.setJmeno("pepa");
-        userDao.update(user);
-        assertEquals("pepa", userDao.getUser(user.getJmeno()).getJmeno());
+        Obrazek obrazek = new Obrazek(user, "http://test", "titulek", new Date());
+        obrazekDao.create(obrazek);
+        obrazek = obrazekDao.getObrazek(obrazek.getUrl());
+
+        Tag tag = new Tag("titulek", obrazek);
+        tagDao.create(tag);
+        assertEquals(1, tagDao.getTagy().size());
     }
 
 }

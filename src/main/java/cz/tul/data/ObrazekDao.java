@@ -47,14 +47,6 @@ public class ObrazekDao {
         session().save(obrazek);
     }
 
-
-    public Obrazek getObrazek(int id_obrazek) {
-        Criteria criteria = session().createCriteria(Obrazek.class);
-        criteria.add(Restrictions.idEq(id_obrazek));
-
-        return (Obrazek) criteria.uniqueResult();
-    }
-
     public Obrazek getObrazek(String url) {
         Criteria criteria = session().createCriteria(Obrazek.class);
         criteria.add(Restrictions.eq("url", url));
