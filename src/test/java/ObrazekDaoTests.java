@@ -1,6 +1,7 @@
 import cz.tul.Main;
 import cz.tul.data.Obrazek;
 import cz.tul.data.User;
+import cz.tul.services.KomentarService;
 import cz.tul.services.ObrazekService;
 import cz.tul.services.UserService;
 import org.junit.Before;
@@ -30,8 +31,8 @@ public class ObrazekDaoTests {
     private ObrazekService obrazekService;
     @Autowired
     private UserService userService;
-//    @Autowired
-//    private KomentarService komentarService;
+    @Autowired
+    private KomentarService komentarService;
 //    @Autowired
 //    private TagService tagService;
 
@@ -41,7 +42,7 @@ public class ObrazekDaoTests {
 
     @Before
     public void init() {
-//        komentarService.deleteKomentare();
+        komentarService.deleteKomentare();
 //        tagService.deleteTags();
         obrazekService.deleteObrazky();
         userService.deleteUsers();

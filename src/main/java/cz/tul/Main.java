@@ -25,10 +25,10 @@ public class Main {
         return new UserService();
     }
 
-//    @Bean
-//    public KomentarService komentarService() {
-//        return new KomentarService();
-//    }
+    @Bean
+    public KomentarService komentarService() {
+        return new KomentarService();
+    }
 
     @Bean
     public ObrazekService obrazekService() {
