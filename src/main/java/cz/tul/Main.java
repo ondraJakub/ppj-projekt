@@ -35,10 +35,10 @@ public class Main {
         return new ObrazekService();
     }
 
-//    @Bean
-//    public TagService tagService() {
-//        return new TagService();
-//    }
+    @Bean
+    public TagService tagService() {
+        return new TagService();
+    }
 
     @Autowired
     EntityManagerFactory entityManagerFactory;
@@ -62,13 +62,13 @@ public class Main {
         List<Obrazek> images = obrazekService.getObrazky();
         System.out.println(images);
 
-//        KomentarService komentarService = ctx.getBean(KomentarService.class);
-//        List<Komentar> comments = komentarService.getKomentare();
-//        System.out.println(comments);
-//
-//        TagService tagService = ctx.getBean(TagService.class);
-//        List<Tag> tags = tagService.getTagy();
-//        System.out.println(tags);
+        KomentarService komentarService = ctx.getBean(KomentarService.class);
+        List<Komentar> comments = komentarService.getKomentare();
+        System.out.println(comments);
+
+        TagService tagService = ctx.getBean(TagService.class);
+        List<Tag> tags = tagService.getTagy();
+        System.out.println(tags);
 
     }
 

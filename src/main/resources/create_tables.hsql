@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`user` (
   UNIQUE INDEX `id_user_UNIQUE` (`id` ASC))
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`obrazek` (
+CREATE TABLE IF NOT EXISTS `mydb`.`obrazekId` (
   `id_obrazek` INT NOT NULL AUTO_INCREMENT,
   `id` INT NOT NULL,
   `url` VARCHAR(1000) NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`tag` (
   INDEX `fk_tag_image1_idx` (`id_obrazek` ASC),
   CONSTRAINT `fk_tag_image1`
     FOREIGN KEY (`id_obrazek`)
-    REFERENCES `mydb`.`obrazek` (`id_obrazek`)
+    REFERENCES `mydb`.`obrazekId` (`id_obrazek`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`komentar` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_comment_image1`
     FOREIGN KEY (`id_obrazek`)
-    REFERENCES `mydb`.`obrazek` (`id_obrazek`)
+    REFERENCES `mydb`.`obrazekId` (`id_obrazek`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

@@ -3,6 +3,7 @@ package cz.tul.services;
 import cz.tul.data.Komentar;
 import cz.tul.repositories.KomentarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,6 +12,7 @@ import java.util.stream.StreamSupport;
 /**
  * Created by Ondrej Jakub on 4/30/2017.
  */
+@Service
 public class KomentarService {
     @Autowired
     private KomentarRepository komentarRepository;

@@ -31,6 +31,8 @@ public class KomentarDaoTests {
     private UserService userService;
     @Autowired
     private KomentarService komentarService;
+    @Autowired
+    private TagService tagService;
 
 
     private User user = new User("imageCreator", new Date());
@@ -38,7 +40,7 @@ public class KomentarDaoTests {
     @Before
     public void init() {
         komentarService.deleteKomentare();
-//        tagService.deleteTags();
+        tagService.deleteTagy();
         obrazekService.deleteObrazky();
         userService.deleteUsers();
     }

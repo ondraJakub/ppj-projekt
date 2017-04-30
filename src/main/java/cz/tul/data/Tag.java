@@ -8,6 +8,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "tag")
+@IdClass(TagId.class)
 public class Tag implements Serializable {
 
     @Id
@@ -15,13 +16,12 @@ public class Tag implements Serializable {
     private String titulek;
 
     @Id
-    @ManyToOne
-    @JoinColumn(name = "id_obrazek")
-    private Obrazek obrazek;
+    @Column(name = "obrazek_id")
+    private Integer obrazekId;
 
-    public Tag(String titulek, Obrazek obrazek) {
+    public Tag(String titulek, Integer obrazekId) {
         this.titulek = titulek;
-        this.obrazek = obrazek;
+        this.obrazekId = obrazekId;
     }
 
     public Tag() {
@@ -32,8 +32,8 @@ public class Tag implements Serializable {
         return titulek;
     }
 
-    public Obrazek getObrazek() {
-        return obrazek;
+    public Integer getObrazekId() {
+        return obrazekId;
     }
 
 
@@ -41,14 +41,14 @@ public class Tag implements Serializable {
         this.titulek = titulek;
     }
 
-    public void setObrazek(Obrazek obrazek) {
-        this.obrazek = obrazek;
+    public void setObrazekId(Integer obrazekId) {
+        this.obrazekId = obrazekId;
     }
 
     @Override
     public String toString() {
         return "Tag{titulek='" + titulek + '\'' +
-                ", obrazek=" + obrazek +
+                ", obrazekId=" + obrazekId +
                 '}';
     }
 }
