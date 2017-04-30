@@ -31,6 +31,14 @@ public class TagService {
         return tagRepository.findOne(id);
     }
 
+    public List<Tag> getTagyProObrazek(Integer imageId){
+        if(imageId != 0) {
+            return StreamSupport.stream(tagRepository.getTagyProObrazek(imageId).spliterator(), false).collect(Collectors.toList());
+        }else{
+            return null;
+        }
+    }
+
 
     public List<Tag> getTagy() {
         List<Tag> obrazky = StreamSupport.stream(tagRepository.findAll().spliterator(), false).collect(Collectors.toList());

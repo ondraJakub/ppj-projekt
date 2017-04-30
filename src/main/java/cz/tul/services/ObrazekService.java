@@ -1,6 +1,7 @@
 package cz.tul.services;
 
 import cz.tul.data.Obrazek;
+import cz.tul.data.User;
 import cz.tul.repositories.ObrazekRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,30 @@ public class ObrazekService {
     public List<Obrazek> getObrazky() {
         List<Obrazek> obrazky = StreamSupport.stream(obrazekRepository.findAll().spliterator(), false).collect(Collectors.toList());
         return obrazky;
+    }
+
+    public List<Obrazek> najdiPodleAutora(User user){
+        if(user != null) {
+            return obrazekRepository.najdiPodleAutora(user);
+        }else{
+            return null;
+        }
+    }
+
+    public List<Obrazek> najdiPodleNazvu(String name){
+        if(name != null){
+            return obrazekRepository.najdiPodleNazvu(name);
+        }else{
+            return null;
+        }
+    }
+
+    public List<Obrazek> najdiPodleTagu(List<String> tags) {
+        if(tags != null) {
+            return obrazekRepository.najdiPodleTagu(tags);
+        }else{
+            return null;
+        }
     }
 
     public void deleteObrazky() {

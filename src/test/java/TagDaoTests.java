@@ -11,10 +11,12 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.time.LocalDateTime;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnitUtil;
 import java.util.Date;
+import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -37,6 +39,9 @@ public class TagDaoTests {
 
     private User user = new User("imageCreator", new Date());
 
+    @Autowired
+    EntityManagerFactory entityManagerFactory;
+
     @Before
     public void init() {
         komentarService.deleteKomentare();
@@ -57,6 +62,28 @@ public class TagDaoTests {
         Tag tag = new Tag("titulek", obrazek.getId());
         tagService.create(tag);
         assertEquals(1, tagService.getTagy().size());
+    }
+
+    @Test
+    public void testDeleteAGetTagyProObrazek() {
+        userService.create(user);
+        user = userService.getUser(user.getId());
+
+        Obrazek obrazek = new Obrazek(user, "http://test", "titulek", new Date());
+        obrazekService.create(obrazek);
+        obrazek = obrazekService.getObrazek(obrazek.getId());
+
+        Tag tag = new Tag("titulek", obrazek.getId());
+        tagService.create(tag);
+        assertEquals(1, tagService.getTagyProObrazek(obrazek.getId()).size());
+
+        PersistenceUnitUtil util = entityManagerFactory.getPersistenceUnitUtil();
+        TagId tagId = (TagId) util.getIdentifier(tag);
+        tagService.deleteTag(tagId);
+        System.out.println(obrazek.getId());
+        List<Tag> tagy = tagService.getTagyProObrazek(obrazek.getId());
+        System.out.println(tagy);
+        assertEquals(0, tagy.size());
     }
 
 }

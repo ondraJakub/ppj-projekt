@@ -30,22 +30,23 @@ public class Komentar {
     @Column(name="pocet_dislikes")
     private Integer pocet_dislikes;
 
-    @ManyToOne
-    @JoinColumn(name = "id_user")
-    private User user;
+    @Column(name = "id_user")
+    private Integer id_user;
 
-    @ManyToOne
-    @JoinColumn(name = "id_obrazek")
-    private Obrazek obrazek;
+    @Column(name = "id_obrazek")
+    private Integer id_obrazek;
 
-    public Komentar() {
-        this.user = new User();
-        this.obrazek = new Obrazek();
+    public Komentar(Integer user, Integer id_obrazek) {
+        this.id_user = user;
+        this.id_obrazek =id_obrazek;
     }
 
-    public Komentar(User user, Obrazek obrazek, Date datum_vytvoreni, String text) {
-        this.user = user;
-        this.obrazek = obrazek;
+    public Komentar() {
+    }
+
+    public Komentar(Integer user, Integer id_obrazek, Date datum_vytvoreni, String text) {
+        this.id_user = user;
+        this.id_obrazek = id_obrazek;
         this.datum_vytvoreni = datum_vytvoreni;
         this.datum_editace = datum_vytvoreni;
         this.pocet_likes = 0;
@@ -61,12 +62,12 @@ public class Komentar {
         this.text = text;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(Integer user) {
+        this.id_user = user;
     }
 
-    public void setObrazek(Obrazek obrazek) {
-        this.obrazek = obrazek;
+    public void setId_obrazek(Integer id_obrazek) {
+        this.id_obrazek = id_obrazek;
     }
 
     public void setDatum_vytvoreni(Date datum_vytvoreni) {
@@ -90,12 +91,12 @@ public class Komentar {
         return text;
     }
 
-    public User getUser() {
-        return user;
+    public Integer getUser() {
+        return id_user;
     }
 
-    public Obrazek getObrazek() {
-        return obrazek;
+    public Integer getId_obrazek() {
+        return id_obrazek;
     }
 
     public Date getDatum_vytvoreni() {
@@ -123,8 +124,8 @@ public class Komentar {
         return "Komentar{" +
                 "id='" + id + '\'' +
                 ", text='" + text + '\'' +
-                ", autor=" + user +
-                ", obrazek=" + obrazek +
+                ", autor=" + id_user +
+                ", obrazek_id=" + id_obrazek +
                 ", datum_vytvoreni=" + datum_vytvoreni +
                 ", datum_editace=" + datum_editace +
                 ", pocet_likes=" + pocet_likes +
@@ -149,8 +150,8 @@ public class Komentar {
         if (pocet_likes != null ? !pocet_likes.equals(komentar.pocet_likes) : komentar.pocet_likes != null)
             return false;
 
-        if (user != null ? !user.equals(komentar.user) : komentar.user != null) return false;
-        return obrazek != null ? obrazek.equals(komentar.obrazek) : komentar.obrazek == null;
+        if (id_user != null ? !id_user.equals(komentar.id_user) : komentar.id_user != null) return false;
+        return id_obrazek != null ? id_obrazek.equals(komentar.id_obrazek) : komentar.id_obrazek == null;
 
     }
 
@@ -161,8 +162,8 @@ public class Komentar {
         result = 31 * result + (datum_vytvoreni != null ? datum_vytvoreni.hashCode() : 0);
         result = 31 * result + (datum_editace != null ? datum_editace.hashCode() : 0);
         result = 31 * result + (pocet_likes != null ? pocet_likes.hashCode() : 0);
-        result = 31 * result + (user != null ? user.hashCode() : 0);
-        result = 31 * result + (obrazek != null ? obrazek.hashCode() : 0);
+        result = 31 * result + (id_user != null ? id_user.hashCode() : 0);
+        result = 31 * result + (id_obrazek != null ? id_obrazek.hashCode() : 0);
         return result;
     }
 }

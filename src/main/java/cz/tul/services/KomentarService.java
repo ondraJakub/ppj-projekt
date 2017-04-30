@@ -44,6 +44,14 @@ public class KomentarService {
         return obrazky;
     }
 
+    public List<Komentar> najdiKomentareObrazku(Integer imageId) {
+        if(imageId >= 0) {
+            return komentarRepository.najdiKomentareObrazku(imageId);
+        }else{
+            return null;
+        }
+    }
+
     public void deleteKomentare() {
         komentarRepository.deleteAll();
     }

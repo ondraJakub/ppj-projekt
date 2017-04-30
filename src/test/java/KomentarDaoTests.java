@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Created by Ondrej Jakub on 4/3/2017.
@@ -35,7 +35,8 @@ public class KomentarDaoTests {
     private TagService tagService;
 
 
-    private User user = new User("imageCreator", new Date());
+    private User user1 = new User("franta", new Date());
+    private User user2 = new User("pepa", new Date());
 
     @Before
     public void init() {
@@ -47,17 +48,87 @@ public class KomentarDaoTests {
 
     @Test
     public void testVytvorKomentar() {
-        userService.create(user);
-        user = userService.getUser(user.getId());
+        userService.create(user1);
+        user1 = userService.getUser(user1.getId());
 
-        Obrazek obrazek = new Obrazek(user, "http://testovaci_obrazek", "titulek", new Date());
+        Obrazek obrazek = new Obrazek(user1, "http://testovaci_obrazek", "titulek", new Date());
         obrazekService.create(obrazek);
         obrazek = obrazekService.getObrazek(obrazek.getId());
 
-        Komentar komentar = new Komentar(user, obrazek, new Date(), "test");
+        Komentar komentar = new Komentar(user1.getId(), obrazek.getId(), new Date(), "test");
         komentarService.create(komentar);
 
         List<Komentar> kometare = komentarService.getKomentare();
         assertEquals(1, kometare.size());
     }
+
+    @Test
+    public void testUpdate() {
+        userService.create(user1);
+        user1 = userService.getUser(user1.getId());
+
+        Obrazek obrazek = new Obrazek(user1, "http://testovaci_obrazek", "titulek", new Date());
+        obrazekService.create(obrazek);
+        obrazek = obrazekService.getObrazek(obrazek.getId());
+
+        Komentar komentar = new Komentar(user1.getId(), obrazek.getId(), new Date(), "test");
+        komentarService.create(komentar);
+
+        komentar.setId_obrazek(obrazek.getId());
+
+        komentarService.create(komentar);
+        List<Komentar> komentare = komentarService.getKomentare();
+        assertNotNull(komentare);
+        assertEquals(1, komentare.size());
+
+        komentar.setText("newText");
+        komentarService.update(komentar);
+        List<Komentar> komentare2 = komentarService.getKomentare();
+        assertNotNull(komentare2);
+        assertEquals(1, komentare2.size());
+
+        assertNotEquals(komentare, komentare2);
+    }
+
+    @Test
+    public void testLikeDislike() {
+        userService.create(user1);
+        user1 = userService.getUser(user1.getId());
+
+        Obrazek obrazek = new Obrazek(user1, "http://testovaci_obrazek", "titulek", new Date());
+        obrazekService.create(obrazek);
+        obrazek = obrazekService.getObrazek(obrazek.getId());
+
+        Komentar komentar = new Komentar(user1.getId(), obrazek.getId(), new Date(), "test");
+        komentarService.create(komentar);
+        komentar = komentarService.getKomentar(komentar.getId());
+
+        assertEquals((int) komentar.getPocet_likes(), 0);
+        komentarService.pridejLike(komentar);
+        assertEquals((int) komentar.getPocet_likes(), 1);
+        komentarService.pridejDisLike(komentar);
+        assertEquals((int) komentar.getPocet_dislikes(), 1);
+    }
+
+    @Test
+    public void testCommentsForImage(){
+        userService.create(user1);
+        user1 = userService.getUser(user1.getId());
+
+        Obrazek obrazek = new Obrazek(user1, "http://testovaci_obrazek", "titulek", new Date());
+        obrazekService.create(obrazek);
+        obrazek = obrazekService.getObrazek(obrazek.getId());
+
+        Komentar komentar = new Komentar(user1.getId(), obrazek.getId(), new Date(), "test");
+        komentarService.create(komentar);
+        List<Komentar> komentare = komentarService.najdiKomentareObrazku(obrazek.getId());
+        assertNotNull(komentare);
+        assertEquals(1, komentare.size());
+
+        komentarService.deleteKomentare();
+        List<Komentar> komentare2 = komentarService.najdiKomentareObrazku(obrazek.getId());
+        assertEquals(0, komentare2.size());
+    }
+
+
 }
